@@ -1,0 +1,7 @@
+{
+  "tokenizer": "standard",
+  "filter": [
+    "test_filter"
+  ],
+  "text": "단어1 단어2"
+}
