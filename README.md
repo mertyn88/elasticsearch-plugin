@@ -115,7 +115,7 @@ public boolean incrementToken() throws IOException {
 }
 ```
 
-* 실직적인 토큰 처리 메소드이다.
+* 실질적인 토큰 처리 메소드이다.
 * 현재로서는 하나의 토큰을 받으면 한번의 처리만 하게끔 되어 있지만, 전달받은 토큰을 1:N으로 분리한다면 
   input.incrementToken()을 while문으로 처리하고 해당 토큰이 마지막일 경우에만 return false한다. (true면 무한루프) 
 
@@ -345,4 +345,3 @@ public class JarHell {
 ```java
 public final class TestFilter extends TokenFilter
 ```
-
