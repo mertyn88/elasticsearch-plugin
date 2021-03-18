@@ -6,6 +6,7 @@ import org.elasticsearch.env.Environment;
 import org.elasticsearch.index.IndexSettings;
 import org.elasticsearch.index.analysis.filter.TestFilter;
 
+
 public class TestTokenFilterFactory extends AbstractTokenFilterFactory{
 
     public TestTokenFilterFactory(IndexSettings indexSettings, Environment environment, String name,
@@ -18,6 +19,7 @@ public class TestTokenFilterFactory extends AbstractTokenFilterFactory{
     @Override
     public TokenStream create(TokenStream tokenStream) {
         System.out.println("token stream 내뱉는 create 함수");
+
         return new TestFilter(tokenStream);
     }
 }
