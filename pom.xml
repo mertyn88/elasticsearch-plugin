@@ -5,10 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.elasticsearch</groupId>
-    <artifactId>elasticsearch-example-plugin</artifactId>
+    <artifactId>elasticsearch-plugin</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <modules>
         <module>nori-plugin</module>
+        <module>nori-analyzer</module>
     </modules>
     <packaging>pom</packaging>
     <description>Elasticsearch plugin example</description>

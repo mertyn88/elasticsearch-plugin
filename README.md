@@ -170,24 +170,24 @@ Results :
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 
 [INFO] 
-[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ elasticsearch-example-plugin ---
-[INFO] Building jar: /Users/junmyung/IdeaProjects/elasticsearch-plugin-example/target/elasticsearch-example-plugin-7.9.2.jar
+[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ elasticsearch-plugin ---
+[INFO] Building jar: /Users/junmyung/IdeaProjects/elasticsearch-plugin-example/target/elasticsearch-plugin-7.9.2.jar
 [INFO] 
-[INFO] --- maven-assembly-plugin:2.4:single (tarball) @ elasticsearch-example-plugin ---
+[INFO] --- maven-assembly-plugin:2.4:single (tarball) @ elasticsearch-plugin ---
 [INFO] Reading assembly descriptor: src/main/assemblies/plugin.xml
 [WARNING] The following patterns were never triggered in this artifact inclusion filter:
-o  'elasticsearch-example-plugin-7.9.2.jar'
+o  'elasticsearch-plugin-7.9.2.jar'
 
 [WARNING] The following patterns were never triggered in this artifact inclusion filter:
 o  'com.google.guava:guava'
 
 [WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
-[INFO] Building zip: /Users/junmyung/IdeaProjects/elasticsearch-plugin-example/target/elasticsearch-example-plugin-7.9.2.zip
+[INFO] Building zip: /Users/junmyung/IdeaProjects/elasticsearch-plugin-example/target/elasticsearch-plugin-7.9.2.zip
 [INFO] 
-[INFO] --- maven-install-plugin:2.4:install (default-install) @ elasticsearch-example-plugin ---
-[INFO] Installing /Users/junmyung/IdeaProjects/elasticsearch-plugin-example/target/elasticsearch-example-plugin-7.9.2.jar to /Users/junmyung/.m2/repository/org/elasticsearch/elasticsearch-example-plugin/7.9.2/elasticsearch-example-plugin-7.9.2.jar
-[INFO] Installing /Users/junmyung/IdeaProjects/elasticsearch-plugin-example/pom.xml to /Users/junmyung/.m2/repository/org/elasticsearch/elasticsearch-example-plugin/7.9.2/elasticsearch-example-plugin-7.9.2.pom
-[INFO] Installing /Users/junmyung/IdeaProjects/elasticsearch-plugin-example/target/elasticsearch-example-plugin-7.9.2.zip to /Users/junmyung/.m2/repository/org/elasticsearch/elasticsearch-example-plugin/7.9.2/elasticsearch-example-plugin-7.9.2.zip
+[INFO] --- maven-install-plugin:2.4:install (default-install) @ elasticsearch-plugin ---
+[INFO] Installing /Users/junmyung/IdeaProjects/elasticsearch-plugin-example/target/elasticsearch-plugin-7.9.2.jar to /Users/junmyung/.m2/repository/org/elasticsearch/elasticsearch-plugin/7.9.2/elasticsearch-plugin-7.9.2.jar
+[INFO] Installing /Users/junmyung/IdeaProjects/elasticsearch-plugin-example/pom.xml to /Users/junmyung/.m2/repository/org/elasticsearch/elasticsearch-plugin/7.9.2/elasticsearch-plugin-7.9.2.pom
+[INFO] Installing /Users/junmyung/IdeaProjects/elasticsearch-plugin-example/target/elasticsearch-plugin-7.9.2.zip to /Users/junmyung/.m2/repository/org/elasticsearch/elasticsearch-plugin/7.9.2/elasticsearch-plugin-7.9.2.zip
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
@@ -210,9 +210,9 @@ o  'com.google.guava:guava'
 > 배포된 zip파일의 위치를 지정한다. (해당 프로젝트는 target이다.)
 
 ```
-/elasticsearch-7.9.2/elasticsearch-plugin install file:///{zip파일 위치}/elasticsearch-example-plugin-7.9.2.zip
--> Installing file:///{zip파일 위치}/elasticsearch-example-plugin-7.9.2.zip
--> Downloading file:///{zip파일 위치}/elasticsearch-example-plugin-7.9.2.zip
+/elasticsearch-7.9.2/elasticsearch-plugin install file:///{zip파일 위치}/elasticsearch-plugin-7.9.2.zip
+-> Installing file:///{zip파일 위치}/elasticsearch-plugin-7.9.2.zip
+-> Downloading file:///{zip파일 위치}/elasticsearch-plugin-7.9.2.zip
 [=================================================] 100%
 ```
 
