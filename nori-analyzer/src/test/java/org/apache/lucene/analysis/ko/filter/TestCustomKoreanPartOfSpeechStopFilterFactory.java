@@ -21,11 +21,9 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.BaseTokenStreamTestCase;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.Tokenizer;
-import org.apache.lucene.analysis.ko.KoreanNumberFilterFactory;
 import org.apache.lucene.analysis.ko.KoreanPartOfSpeechStopFilterFactory;
 import org.apache.lucene.analysis.ko.KoreanTokenizer;
 import org.apache.lucene.analysis.ko.KoreanTokenizerFactory;
@@ -35,9 +33,9 @@ import org.apache.lucene.util.Version;
 import org.junit.Before;
 
 /**
- * Simple tests for {@link KoreanNumberFilterFactory}
+ * Simple tests for {@link KoreanPartOfSpeechStopFilterFactory}
  */
-public class TestCustomKoreanNumberFilterFactory extends BaseTokenStreamTestCase {
+public class TestCustomKoreanPartOfSpeechStopFilterFactory extends BaseTokenStreamTestCase {
 
   String dicPath = "";
 
@@ -46,32 +44,25 @@ public class TestCustomKoreanNumberFilterFactory extends BaseTokenStreamTestCase
     dicPath = "/Users/junmyung/IdeaProjects/elasticsearch-plugin/nori-analyzer/src/test/resources/org/apache/lucene/analysis/ko";
   }
 
-  /**
-   * charFilter 적용하지 않음
-   * tokenizer 품사적용(Space 제외)
-   * filter 숫자 관련 적용
-   * @throws IOException
-   */
-  public void test_part_of_speech_stop_filter_and_number_filter() throws  IOException {
+  public void test_part_speech_stop_filter() throws IOException {
     KoreanTokenizerFactory tokenizerFactory = new KoreanTokenizerFactory(new HashMap<>(){{
-      put("discardPunctuation", "false");
+      put("discardPunctuation", "true");   // 출력에서 구두점 토큰을 삭제해야하는 경우
       put("outputUnknownUnigrams", "false");
       put("userDictionary", "userdict.txt");
       put("decompoundMode", KoreanTokenizer.DecompoundMode.NONE.toString());
     }});
 
     tokenizerFactory.inform(new FilesystemResourceLoader(Paths.get(dicPath)));
-    //TODO newAttributeFactory()를 난수를 이용해서 왜하는지 모르겠음..
-    Tokenizer tokenizer = tokenizerFactory.create(newAttributeFactory());
-    tokenizer.setReader(new StringReader("어제 초밥 가격은 10만 원"));
+    Tokenizer tokenizer = tokenizerFactory.create();
+    // 입니다 는 Left 품사는 VCP(긍정 지정사 >> ~~이다) Right 품사는 EP(종결 어미 >> 춥다, 없다, 먹자 등 )
+    // TODO 그럼 입니다는 왜 종결어미가 Right품사로 되었을까?Right 품사는 뭘까..
+    tokenizer.setReader(new StringReader(" 한국은 대단한 나라입니다."));
     KoreanPartOfSpeechStopFilterFactory koreanPartOfSpeechStopFilterFactory = new KoreanPartOfSpeechStopFilterFactory(new HashMap<>(){{
       put("luceneMatchVersion", Version.LATEST.toString());
-      put("tags","SP");
+      put("tags", "JX,ETM,EF");
     }});
+
     TokenStream tokenStream = koreanPartOfSpeechStopFilterFactory.create(tokenizer);
-    tokenStream = new Analyzer.TokenStreamComponents(tokenizer,
-                    new KoreanNumberFilterFactory(new HashMap<>()).create(tokenStream)
-                  ).getTokenStream();
     TokenView.analyzer(tokenStream);
   }
 }
