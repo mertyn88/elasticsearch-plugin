@@ -1,13 +1,14 @@
-package org.elasticsearch.index.analysis;
+package org.elasticsearch.index.analysis.filter;
 
 import org.apache.lucene.analysis.TokenStream;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.env.Environment;
 import org.elasticsearch.index.IndexSettings;
+import org.elasticsearch.index.analysis.AbstractTokenFilterFactory;
 import org.elasticsearch.index.analysis.filter.TestFilter;
 
 
-public class TestTokenFilterFactory extends AbstractTokenFilterFactory{
+public class TestTokenFilterFactory extends AbstractTokenFilterFactory {
 
     public TestTokenFilterFactory(IndexSettings indexSettings, Environment environment, String name,
         Settings settings) {

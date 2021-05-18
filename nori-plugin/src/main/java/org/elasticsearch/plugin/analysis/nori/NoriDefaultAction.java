@@ -1,4 +1,4 @@
-package org.elasticsearch.plugin.example;
+package org.elasticsearch.plugin.analysis.nori;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.unmodifiableList;
@@ -15,25 +15,25 @@ import org.elasticsearch.rest.RestStatus;
 /**
  * Example action with a plugin.
  */
-public class TestAction extends BaseRestHandler {
+public class NoriDefaultAction extends BaseRestHandler {
 
     @Override
     public String getName() {
-        return "test";
+        return "nori_default";
     }
 
     @Override
     public List<Route> routes() {
         return unmodifiableList(asList(
-              new Route(POST, "/_test")
-            , new Route(GET, "/_test")
+              new Route(POST, "/_nori_default")
+            , new Route(GET, "/_nori_default")
             )
         );
     }
 
     @Override
     public RestChannelConsumer prepareRequest(final RestRequest request, final NodeClient client) {
-        System.out.println("Call prepareRequest method");
+        System.out.println("Call nori_default method");
         return channel -> channel.sendResponse(new BytesRestResponse(RestStatus.OK, "application/json","{ \"returnStatus\" : 200, \"returnCode\" : \"SUCCESS\", \"returnMessage\" : \"\" }"));
     }
 }

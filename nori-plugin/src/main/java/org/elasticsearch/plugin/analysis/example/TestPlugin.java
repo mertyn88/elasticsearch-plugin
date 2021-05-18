@@ -1,4 +1,4 @@
-package org.elasticsearch.plugin.example;
+package org.elasticsearch.plugin.analysis.example;
 
 import static java.util.Collections.singletonList;
 
@@ -12,7 +12,7 @@ import org.elasticsearch.common.settings.ClusterSettings;
 import org.elasticsearch.common.settings.IndexScopedSettings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.settings.SettingsFilter;
-import org.elasticsearch.index.analysis.TestTokenFilterFactory;
+import org.elasticsearch.index.analysis.filter.TestTokenFilterFactory;
 import org.elasticsearch.index.analysis.TokenFilterFactory;
 import org.elasticsearch.indices.analysis.AnalysisModule;
 import org.elasticsearch.plugins.ActionPlugin;
