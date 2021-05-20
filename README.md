@@ -6,7 +6,9 @@
 
 ---
 
->  `Elasticsearch plugin`을 개발하기 위한 샘플 소스
+>  `Elasticsearch plugin`을 개발하기 위한 샘플 소스  
+>  2021.05.20 Nori-analyzer 관련 plugin 추가   
+>  [_**Nori analyzer git url**_](https://github.com/korlucene/argo-nori-analyzer)
 
 
 
@@ -216,18 +218,63 @@ o  'com.google.guava:guava'
 [=================================================] 100%
 ```
 
+> 플러그인의 대상 클래스, 플러그인 이름등을 작성해야 정상적으로 설치가 된다.  
+> nori-plugin/resources/plugin-descriptor.properties에 작성하면 된다.  
+```properties
+version=${project.version}
+description=${project.description}
+name=nori-plugin
+classname=org.elasticsearch.plugin.analysis.nori.NoriDefaultPlugin
+java.version=11
+elasticsearch.version=${elasticsearch.version}
+```
+
+
 #### 실행확인 (PostMan)
 
+> PUT test_case
+```json
+{
+    "settings": {
+      "number_of_shards": 1,
+      "number_of_replicas": 0,
+      "analysis": {
+        "analyzer": {
+          "test_keyword_analyzer": {
+            "filter": [
+              "test_filter",
+              "nori_stoptag_filter"
+            ],
+            "type": "custom",
+            "tokenizer": "nori_default_tokenizer"
+          }
+        }
+      }
+    },
+    "mappings": {
+      "properties": {
+        "test": {
+          "type": "text",
+          "analyzer": "test_keyword_analyzer"
+        }
+      }
+    }
+  }
+```
+  
+
+
 > localhost:9200/test_case/_analyze
+nori plugin을 추가하였으므로 샘플도 변경한다.(2021.05.20)
 
 ```json
 //input
 {
-  "tokenizer": "standard",
-  "filter": [
-    "test_filter"
-  ],
-  "text": "단어1 단어2"
+    "tokenizer": "nori_default_tokenizer",
+    "filter": [
+        "nori_stoptag_filter"
+    ],
+    "text": "  와디다락 맛있고, 대한민국은 나라입니다.  "
 }
 ```
 
@@ -236,18 +283,25 @@ o  'com.google.guava:guava'
 {
     "tokens": [
         {
-            "token": "sample_단어1",
-            "start_offset": 0,
-            "end_offset": 3,
-            "type": "WORD",
-            "position": 0
+            "token": "맛있",
+            "start_offset": 7,
+            "end_offset": 9,
+            "type": "word",
+            "position": 1
         },
         {
-            "token": "sample_단어2",
-            "start_offset": 4,
-            "end_offset": 7,
-            "type": "WORD",
-            "position": 1
+            "token": "대한민국",
+            "start_offset": 12,
+            "end_offset": 16,
+            "type": "word",
+            "position": 3
+        },
+        {
+            "token": "입니다",
+            "start_offset": 20,
+            "end_offset": 23,
+            "type": "word",
+            "position": 6
         }
     ]
 }
@@ -264,6 +318,17 @@ o  'com.google.guava:guava'
 ```java
 public class TestFilterTest extends ESTestCase
 ```
+
+> nori-analyzer가 추가된 module의 class를 사용하기 위해, nori-plugin의 pom.xml에 다음을 추가한다.
+```xml
+<!-- nori-analyzer module set -->
+<dependency>
+    <groupId>org.apache.lucene</groupId>
+    <artifactId>nori-analyzer</artifactId>
+    <version>8.4.0</version>
+</dependency>
+```
+
 
 * ESTestCase를 extends하여 가상의 테스트용 인덱스를 생성 할 수있다.
 
@@ -344,4 +409,22 @@ public class JarHell {
 
 ```java
 public final class TestFilter extends TokenFilter
+```
+
+> 테스트 케이스도 통과해서 ES에 plugin을 설치하면 JarHell 예외가 발생할수 있다. 해당 원인은  
+> ES내부에서 이미 사용하고 있는 경우가 대부분일 것이며 해당부분은 lucene-analyzers-common이 nori-analyzer가 추가됨에 따라  
+> jar-hell이 발생하여 해당 부분을 assemblies/plugin.xml에 exlcude한다.
+
+```xml
+<dependencySet>
+    <useProjectArtifact>true</useProjectArtifact>
+    <useTransitiveFiltering>true</useTransitiveFiltering>
+    <excludes>
+        <exclude>org.elasticsearch:elasticsearch</exclude>
+        <exclude>org.apache.lucene:lucene-core</exclude>
+        <exclude>org.apache.logging.log4j:log4j-core</exclude>
+        <!-- nori-analyzer 추가로 인하여 JarHell 방지 -->
+        <exclude>org.apache.lucene:lucene-analyzers-common</exclude>
+    </excludes>
+</dependencySet>
 ```

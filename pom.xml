@@ -15,7 +15,7 @@
     <description>Elasticsearch plugin example</description>
 
     <properties>
-        <java.version>1.11</java.version>
+        <java.version>11</java.version>
         <maven.compiler.plugin>3.1</maven.compiler.plugin>
     </properties>
 

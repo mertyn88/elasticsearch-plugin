@@ -20,6 +20,8 @@
                 <exclude>org.elasticsearch:elasticsearch</exclude>
                 <exclude>org.apache.lucene:lucene-core</exclude>
                 <exclude>org.apache.logging.log4j:log4j-core</exclude>
+                <!-- nori-analyzer 추가로 인하여 JarHell 방지 -->
+                <exclude>org.apache.lucene:lucene-analyzers-common</exclude>
             </excludes>
         </dependencySet>
         <dependencySet>
