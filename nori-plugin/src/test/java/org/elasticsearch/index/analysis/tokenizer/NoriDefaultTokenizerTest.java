@@ -1,4 +1,4 @@
-package org.elasticsearch.index.analysis;
+package org.elasticsearch.index.analysis.tokenizer;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -15,7 +15,7 @@ import org.elasticsearch.plugin.analysis.nori.NoriDefaultPlugin;
 import org.elasticsearch.test.ESTestCase;
 import org.junit.Test;
 
-public class NoriDefaultAnalyzerTest extends ESTestCase {
+public class NoriDefaultTokenizerTest extends ESTestCase {
 
     @Test
     public void test_nori_default_tokenizer() throws IOException {
